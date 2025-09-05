@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Health Support Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #e6f0ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .chat-container {
+            width: 400px;
+            height: 600px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: #4CAF50;
+            color: white;
+            padding: 15px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background: #f0f4f8;
+        }
+
+        .chat-input {
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            font-size: 16px;
+        }
+
+        .chat-input button {
+            padding: 10px 20px;
+            border: none;
+            background: #4CAF50;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-message {
+            align-self: flex-end;
+            background: #DCF8C6;
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+
+        .bot-message {
+            align-self: flex-start;
+            background: #eee;
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">AI Mental Health Support</div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-input">
+            <input type="text" id="userInput" placeholder="Type your message here...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const chatMessages = document.getElementById('chatMessages');
+        const userInput = document.getElementById('userInput');
+
+        // Simple AI response simulation
+        const botResponses = [
+            "I'm here to listen. How are you feeling today?",
+            "It's okay to feel this way. Can you tell me more?",
+            "Remember, taking deep breaths can help calm your mind.",
+            "Would you like some tips to reduce stress?",
+            "Thank you for sharing. Talking about it helps.",
+            "You're not alone. I'm here for you."
+        ];
+
+        function appendMessage(text, className) {
+            const message = document.createElement('div');
+            message.classList.add('message', className);
+            message.innerText = text;
+            chatMessages.appendChild(message);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function sendMessage() {
+            const message = userInput.value.trim();
+            if (!message) return;
+
+            appendMessage(message, 'user-message');
+            userInput.value = '';
+
+            appendMessage("AI is typing...", 'bot-message');
+            const botMessageDiv = chatMessages.lastChild;
+
+            // Simulate AI delay
+            setTimeout(() => {
+                const botReply = botResponses[Math.floor(Math.random() * botResponses.length)];
+                botMessageDiv.innerText = botReply;
+            }, 1000);
+        }
+
+        // Send message on Enter key
+        userInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') sendMessage();
+        });
+    </script>
+</body>
+</html>
